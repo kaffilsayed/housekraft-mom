@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MoM Generator – The Housekraft</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F7F4EF;
+    --ink: #1A1714;
+    --gold: #C9A84C;
+    --gold-light: #E8D5A3;
+    --muted: #7A7169;
+    --border: #DDD8CF;
+    --success: #4A7C59;
+    --error: #8B2635;
+    --rec: #C0392B;
+    --rec-glow: rgba(192,57,43,0.25);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 2px solid var(--gold);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; letter-spacing: 0.08em; color: var(--gold); }
+  .logo span { color: var(--cream); font-weight: 300; }
+  header p { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  h1 { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 300; color: var(--ink); margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+
+  /* MODE TOGGLE */
+  .mode-toggle { display: flex; background: white; border: 1.5px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 24px; width: 100%; }
+  .mode-btn { flex: 1; padding: 12px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; border: none; background: none; color: var(--muted); cursor: pointer; transition: all 0.2s; }
+  .mode-btn.active { background: var(--ink); color: var(--cream); }
+
+  /* RECORD PANEL */
+  .record-section { display: none; flex-direction: column; align-items: center; padding: 40px 20px; background: white; border: 1.5px solid var(--border); border-radius: 4px; margin-bottom: 20px; text-align: center; gap: 16px; }
+  .record-section.visible { display: flex; }
+
+  .rec-wrap { position: relative; display: flex; align-items: center; justify-content: center; width: 120px; height: 120px; }
+  .pulse-ring { position: absolute; width: 100px; height: 100px; border-radius: 50%; border: 2px solid var(--rec); opacity: 0; pointer-events: none; }
+  .pulse-ring.animate { animation: pulse-out 1.4s ease-out infinite; }
+  .pulse-ring:nth-child(2).animate { animation-delay: 0.45s; }
+  .pulse-ring:nth-child(3).animate { animation-delay: 0.9s; }
+  @keyframes pulse-out { 0% { transform: scale(0.9); opacity: 0.65; } 100% { transform: scale(2); opacity: 0; } }
+
+  .rec-btn { position: relative; z-index: 2; width: 80px; height: 80px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 28px; transition: all 0.25s; background: var(--ink); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+  .rec-btn:hover { transform: scale(1.07); }
+  .rec-btn.recording { background: var(--rec); box-shadow: 0 4px 24px var(--rec-glow); animation: rec-breathe 2s ease-in-out infinite; }
+  @keyframes rec-breathe { 0%,100% { box-shadow: 0 4px 24px var(--rec-glow); } 50% { box-shadow: 0 6px 44px rgba(192,57,43,0.55); } }
+
+  .rec-label { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 400; color: var(--ink); }
+  .rec-label.recording { color: var(--rec); }
+  .rec-timer { font-size: 30px; font-weight: 300; letter-spacing: 0.12em; color: var(--ink); font-variant-numeric: tabular-nums; display: none; }
+  .rec-timer.visible { display: block; }
+
+  .waveform { display: none; align-items: center; gap: 3px; height: 32px; }
+  .waveform.visible { display: flex; }
+  .wave-bar { width: 4px; background: var(--rec); border-radius: 2px; animation: wave 0.8s ease-in-out infinite alternate; }
+  .wave-bar:nth-child(1)  { animation-delay:0.00s; height:12px; }
+  .wave-bar:nth-child(2)  { animation-delay:0.10s; height:22px; }
+  .wave-bar:nth-child(3)  { animation-delay:0.20s; height:30px; }
+  .wave-bar:nth-child(4)  { animation-delay:0.05s; height:16px; }
+  .wave-bar:nth-child(5)  { animation-delay:0.15s; height:30px; }
+  .wave-bar:nth-child(6)  { animation-delay:0.25s; height:20px; }
+  .wave-bar:nth-child(7)  { animation-delay:0.00s; height:14px; }
+  .wave-bar:nth-child(8)  { animation-delay:0.10s; height:24px; }
+  .wave-bar:nth-child(9)  { animation-delay:0.20s; height:18px; }
+  .wave-bar:nth-child(10) { animation-delay:0.05s; height:10px; }
+  @keyframes wave { from { transform:scaleY(0.3); } to { transform:scaleY(1); } }
+
+  .rec-hint { font-size: 12px; color: var(--muted); }
+  .recorded-preview { display: none; align-items: center; gap: 10px; background: #F0F7F2; border: 1px solid var(--success); border-radius: 3px; padding: 10px 14px; font-size: 13px; color: var(--success); width: 100%; }
+  .recorded-preview.visible { display: flex; }
+  .recorded-preview audio { flex: 1; height: 32px; }
+
+  /* UPLOAD */
+  .upload-zone { border: 1.5px dashed var(--gold); border-radius: 4px; background: #FFFDF8; padding: 40px 24px; text-align: center; cursor: pointer; transition: all 0.2s; position: relative; margin-bottom: 20px; display: none; }
+  .upload-zone.visible { display: block; }
+  .upload-zone:hover, .upload-zone.drag-over { background: var(--gold-light); border-color: var(--ink); border-style: solid; }
+  .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+  .upload-icon { font-size: 32px; margin-bottom: 10px; opacity: 0.6; }
+  .upload-zone h3 { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 400; margin-bottom: 4px; }
+  .upload-zone p { font-size: 13px; color: var(--muted); }
+  .file-loaded { background: #F0F7F2 !important; border: 1.5px solid var(--success) !important; }
+  .file-loaded h3 { color: var(--success); }
+
+  /* FIELDS */
+  .fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  @media (max-width:580px) { .fields-grid { grid-template-columns: 1fr; } }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field.full { grid-column: 1 / -1; }
+  label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 500; }
+  input, textarea { border: 1px solid var(--border); border-radius: 3px; padding: 10px 13px; font-family: 'DM Sans', sans-serif; font-size: 14px; background: white; color: var(--ink); transition: border-color 0.2s; outline: none; width: 100%; }
+  input:focus, textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.12); }
+  textarea { resize: vertical; min-height: 72px; }
+
+  /* BUTTONS */
+  .btn { background: var(--ink); color: var(--cream); border: none; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; border-radius: 3px; transition: all 0.2s; display: inline-flex; align-items: center; gap: 10px; width: 100%; justify-content: center; }
+  .btn:hover:not(:disabled) { background: var(--gold); color: var(--ink); }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn-sm { width: auto; padding: 10px 20px; font-size: 13px; }
+  .btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+  .btn-outline:hover:not(:disabled) { background: var(--ink); color: var(--cream); }
+
+  /* PROGRESS */
+  .progress-bar { height: 3px; background: var(--border); border-radius: 2px; margin: 20px 0; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--ink)); border-radius: 2px; transition: width 0.4s ease; width: 0%; }
+  .status-msg { font-size: 13px; color: var(--muted); margin-bottom: 6px; min-height: 18px; }
+
+  /* RESULT */
+  .result-section { display: none; margin-top: 36px; }
+  .result-section.visible { display: block; }
+  .tabs { display: flex; border-bottom: 1.5px solid var(--border); margin-bottom: 20px; }
+  .tab { flex: 1; padding: 10px 8px; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; border: none; background: none; color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -1.5px; font-family: 'DM Sans', sans-serif; transition: all 0.15s; text-align: center; }
+  .tab.active { color: var(--ink); border-bottom-color: var(--gold); font-weight: 500; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* MOM DOC */
+  .mom-doc { background: white; border: 1px solid var(--border); border-radius: 4px; padding: 32px 24px; line-height: 1.7; font-size: 14px; }
+  .mom-doc h1 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; }
+  .mom-doc h2 { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 600; margin: 24px 0 8px; padding-left: 10px; border-left: 3px solid var(--gold); }
+  .mom-doc h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin: 16px 0 6px; }
+  .meta-grid { display: grid; grid-template-columns: auto 1fr; gap: 5px 16px; margin-bottom: 24px; font-size: 13px; }
+  .meta-label { font-weight: 500; color: var(--muted); text-transform: uppercase; font-size: 10px; letter-spacing: 0.08em; padding-top: 2px; }
+  .action-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13px; }
+  .action-table th { background: var(--ink); color: var(--cream); padding: 8px 10px; text-align: left; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .action-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .action-table tr:nth-child(even) td { background: var(--cream); }
+  .transcript-box { background: white; border: 1px solid var(--border); border-radius: 4px; padding: 20px; max-height: 420px; overflow-y: auto; font-size: 13px; line-height: 1.75; white-space: pre-wrap; }
+  .actions-bar { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+  .error-box { background: #FDF0F1; border: 1px solid var(--error); color: var(--error); padding: 12px 16px; border-radius: 3px; font-size: 13px; margin-top: 14px; }
+  .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .divider { height: 1px; background: var(--border); margin: 24px 0; }
+  .section-card { background: #FAFAF8; border: 1px solid var(--border); border-radius: 3px; padding: 14px 16px; margin-bottom: 10px; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo">The <span>Housekraft</span></div>
+    <p>MoM Generator</p>
+  </div>
+</header>
+
+<div class="container">
+  <h1>Meeting Transcription & MoM</h1>
+  <p class="subtitle">Record live or upload a file — get a professional Minutes of Meeting instantly.</p>
+
+  <!-- MODE TOGGLE -->
+  <div class="mode-toggle">
+    <button class="mode-btn active" id="modeRecordBtn" onclick="setMode('record')">🎙 Record Live</button>
+    <button class="mode-btn" id="modeUploadBtn" onclick="setMode('upload')">⬆ Upload File</button>
+  </div>
+
+  <!-- LIVE RECORD PANEL -->
+  <div class="record-section visible" id="recordSection">
+    <div class="rec-wrap">
+      <div class="pulse-ring" id="pulse1"></div>
+      <div class="pulse-ring" id="pulse2"></div>
+      <div class="pulse-ring" id="pulse3"></div>
+      <button class="rec-btn" id="recBtn" onclick="toggleRecording()">🎙</button>
+    </div>
+    <div class="rec-timer" id="recTimer">00:00</div>
+    <div class="waveform" id="waveform">
+      <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+      <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+      <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+    </div>
+    <div class="rec-label" id="recLabel">Tap to start recording</div>
+    <p class="rec-hint" id="recHint">Microphone access required — audio stays on your device</p>
+    <div class="recorded-preview" id="recordedPreview">
+      <span>✓</span>
+      <audio id="recordedAudio" controls></audio>
+    </div>
+  </div>
+
+  <!-- UPLOAD PANEL -->
+  <div class="upload-zone" id="uploadZone">
+    <input type="file" id="audioFile" accept="audio/*,video/*" />
+    <div class="upload-icon">🎙️</div>
+    <h3 id="uploadTitle">Drop your recording here</h3>
+    <p id="uploadSub">MP3, M4A, WAV, OGG — or tap to browse</p>
+  </div>
+
+  <!-- CONTEXT FIELDS -->
+  <div class="fields-grid">
+    <div class="field">
+      <label>Client Name</label>
+      <input type="text" id="clientName" placeholder="e.g. Mr. & Mrs. Sharma" />
+    </div>
+    <div class="field">
+      <label>Meeting Date</label>
+      <input type="date" id="meetingDate" />
+    </div>
+    <div class="field">
+      <label>Location / Medium</label>
+      <input type="text" id="location" placeholder="e.g. Site visit – Whitefield" />
+    </div>
+    <div class="field">
+      <label>Prepared By</label>
+      <input type="text" id="preparedBy" value="Kaffil – Sales Manager" />
+    </div>
+    <div class="field full">
+      <label>Additional Context (optional)</label>
+      <textarea id="context" placeholder="Project type, apartment size, design theme, budget…"></textarea>
+    </div>
+  </div>
+
+  <button class="btn" id="generateBtn" disabled>
+    <span>✦</span>
+    <span id="btnText">Generate MoM</span>
+  </button>
+
+  <div id="errorBox" class="error-box" style="display:none;"></div>
+
+  <div id="progressSection" style="display:none; margin-top:16px;">
+    <p class="status-msg" id="statusMsg">Transcribing audio…</p>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result-section" id="resultSection">
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('mom')">📄 Minutes of Meeting</button>
+      <button class="tab" onclick="switchTab('transcript')">🎤 Transcript</button>
+    </div>
+    <div class="tab-content active" id="momTab">
+      <div class="mom-doc" id="momContent"></div>
+      <div class="actions-bar">
+        <button class="btn btn-sm" onclick="downloadMoM()">⬇ Download</button>
+        <button class="btn btn-sm btn-outline" onclick="copyMoM()">Copy</button>
+      </div>
+    </div>
+    <div class="tab-content" id="transcriptTab">
+      <div class="transcript-box" id="transcriptContent"></div>
+      <div class="actions-bar">
+        <button class="btn btn-sm btn-outline" onclick="copyTranscript()">Copy Transcript</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let audioBase64 = '';
+let audioMediaType = 'audio/webm';
+let transcriptText = '';
+let momText = '';
+
+let mediaRecorder = null;
+let audioChunks = [];
+let recordingTimer = null;
+let recordingSeconds = 0;
+let isRecording = false;
+
+document.getElementById('meetingDate').value = new Date().toISOString().split('T')[0];
+
+function setMode(mode) {
+  document.getElementById('modeRecordBtn').classList.toggle('active', mode === 'record');
+  document.getElementById('modeUploadBtn').classList.toggle('active', mode === 'upload');
+  document.getElementById('recordSection').classList.toggle('visible', mode === 'record');
+  document.getElementById('uploadZone').classList.toggle('visible', mode === 'upload');
+}
+
+async function toggleRecording() {
+  if (!isRecording) { await startRecording(); } else { stopRecording(); }
+}
+
+async function startRecording() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    audioChunks = [];
+    const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus'
+      : MediaRecorder.isTypeSupported('audio/mp4') ? 'audio/mp4' : 'audio/webm';
+    audioMediaType = mimeType.split(';')[0];
+    mediaRecorder = new MediaRecorder(stream, { mimeType });
+    mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(audioChunks, { type: audioMediaType });
+      document.getElementById('recordedAudio').src = URL.createObjectURL(blob);
+      document.getElementById('recordedPreview').classList.add('visible');
+      const reader = new FileReader();
+      reader.onload = ev => { audioBase64 = ev.target.result.split(',')[1]; document.getElementById('generateBtn').disabled = false; };
+      reader.readAsDataURL(blob);
+      stream.getTracks().forEach(t => t.stop());
+    };
+    mediaRecorder.start(250);
+    isRecording = true;
+    recordingSeconds = 0;
+    document.getElementById('recBtn').classList.add('recording');
+    document.getElementById('recBtn').textContent = '⏹';
+    document.getElementById('recLabel').textContent = 'Recording… tap to stop';
+    document.getElementById('recLabel').classList.add('recording');
+    document.getElementById('recHint').textContent = 'Tap the button when done to stop recording';
+    document.getElementById('recTimer').classList.add('visible');
+    document.getElementById('waveform').classList.add('visible');
+    document.getElementById('recordedPreview').classList.remove('visible');
+    document.getElementById('generateBtn').disabled = true;
+    ['pulse1','pulse2','pulse3'].forEach(id => document.getElementById(id).classList.add('animate'));
+    updateTimer();
+    recordingTimer = setInterval(updateTimer, 1000);
+  } catch(e) {
+    alert('Microphone access denied. Please allow microphone access and try again.');
+  }
+}
+
+function stopRecording() {
+  if (!mediaRecorder || !isRecording) return;
+  mediaRecorder.stop();
+  isRecording = false;
+  clearInterval(recordingTimer);
+  document.getElementById('recBtn').classList.remove('recording');
+  document.getElementById('recBtn').textContent = '🎙';
+  document.getElementById('recLabel').textContent = '✓ Recording saved';
+  document.getElementById('recLabel').classList.remove('recording');
+  document.getElementById('recHint').textContent = 'Fill in the details below and tap Generate MoM';
+  document.getElementById('waveform').classList.remove('visible');
+  ['pulse1','pulse2','pulse3'].forEach(id => document.getElementById(id).classList.remove('animate'));
+}
+
+function updateTimer() {
+  recordingSeconds++;
+  document.getElementById('recTimer').textContent =
+    String(Math.floor(recordingSeconds/60)).padStart(2,'0') + ':' + String(recordingSeconds%60).padStart(2,'0');
+}
+
+const zone = document.getElementById('uploadZone');
+zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('drag-over'); handleFile(e.dataTransfer.files[0]); });
+document.getElementById('audioFile').addEventListener('change', e => { if (e.target.files[0]) handleFile(e.target.files[0]); });
+
+function handleFile(file) {
+  if (!file) return;
+  audioMediaType = file.type || 'audio/mpeg';
+  document.getElementById('uploadTitle').textContent = '✓ ' + file.name;
+  document.getElementById('uploadSub').textContent = (file.size/1024/1024).toFixed(1) + ' MB — ready';
+  zone.classList.add('file-loaded');
+  const reader = new FileReader();
+  reader.onload = ev => { audioBase64 = ev.target.result.split(',')[1]; document.getElementById('generateBtn').disabled = false; };
+  reader.readAsDataURL(file);
+}
+
+async function callClaude(messages, systemPrompt, maxTokens) {
+  const res = await fetch('/api/claude', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: maxTokens || 4000, system: systemPrompt, messages })
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error?.message || 'API error ' + res.status);
+  }
+  const data = await res.json();
+  return data.content.map(b => b.text || '').join('');
+}
+
+function setProgress(pct, msg) {
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('statusMsg').textContent = msg;
+}
+
+document.getElementById('generateBtn').addEventListener('click', async () => {
+  if (!audioBase64) return;
+  const clientName = document.getElementById('clientName').value.trim() || 'Client';
+  const meetingDate = document.getElementById('meetingDate').value || new Date().toLocaleDateString('en-IN');
+  const location = document.getElementById('location').value.trim() || 'Not specified';
+  const preparedBy = document.getElementById('preparedBy').value.trim() || 'Kaffil – Sales Manager';
+  const extraCtx = document.getElementById('context').value.trim();
+
+  document.getElementById('generateBtn').disabled = true;
+  document.getElementById('generateBtn').innerHTML = '<span class="spinner"></span><span>Processing…</span>';
+  document.getElementById('errorBox').style.display = 'none';
+  document.getElementById('progressSection').style.display = 'block';
+  document.getElementById('resultSection').classList.remove('visible');
+
+  try {
+    setProgress(10, 'Sending audio to Claude for transcription…');
+    transcriptText = await callClaude([{
+      role: 'user',
+      content: [
+        { type: 'text', text: 'Transcribe this audio recording completely. This is a client consultation meeting at The Housekraft, a luxury interior design company in Bangalore. Label each speaker clearly (Sales Manager:, Client:, etc. — use real names if mentioned). Include all dialogue. Transliterate non-English to English if needed.' },
+        { type: 'document', source: { type: 'base64', media_type: audioMediaType, data: audioBase64 } }
+      ]
+    }], 'You are an expert transcriptionist. Output only the verbatim transcript with speaker labels. No extra commentary.', 4000);
+
+    setProgress(55, 'Generating Minutes of Meeting…');
+    const dateFormatted = (() => { try { return new Date(meetingDate).toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' }); } catch(e) { return meetingDate; } })();
+
+    momText = await callClaude([{
+      role: 'user',
+      content: `Create a formal MoM for The Housekraft, luxury interior design company, Bangalore.
+
+MEETING DETAILS:
+- Client: ${clientName}
+- Date: ${dateFormatted}
+- Location: ${location}
+- Prepared By: ${preparedBy}
+${extraCtx ? '- Context: ' + extraCtx : ''}
+
+TRANSCRIPT:
+${transcriptText}
+
+Generate clean inner HTML (no doctype/html/body tags). Include:
+1. "Minutes of Meeting" title + meta in <div class="meta-grid"> with <span class="meta-label"> pairs
+2. Attendees
+3. Purpose / Agenda  
+4. Discussion Summary — <h2> per topic, <p> for detail, be thorough
+5. Client Requirements & Preferences — detailed <ul><li> list
+6. Action Items — <table class="action-table"> — columns: Action Item | Owner | Deadline
+7. Next Steps
+8. Closing Notes
+
+Use: h1, h2, h3, .meta-grid, .meta-label, .section-card, .divider, .action-table, ul, li`
+    }], 'You are an expert document writer for a luxury interior design firm. Output only valid inner HTML — no markdown, no backticks.', 4000);
+
+    setProgress(95, 'Formatting…');
+    document.getElementById('momContent').innerHTML = momText;
+    document.getElementById('transcriptContent').textContent = transcriptText;
+    document.getElementById('resultSection').classList.add('visible');
+    setProgress(100, '✓ Done!');
+    setTimeout(() => document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' }), 200);
+
+  } catch(err) {
+    document.getElementById('errorBox').textContent = 'Error: ' + err.message;
+    document.getElementById('errorBox').style.display = 'block';
+    document.getElementById('progressSection').style.display = 'none';
+  } finally {
+    document.getElementById('generateBtn').disabled = false;
+    document.getElementById('generateBtn').innerHTML = '<span>✦</span><span>Generate MoM</span>';
+  }
+});
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active',(i===0&&tab==='mom')||(i===1&&tab==='transcript')));
+  document.getElementById('momTab').classList.toggle('active', tab==='mom');
+  document.getElementById('transcriptTab').classList.toggle('active', tab==='transcript');
+}
+
+function copyMoM() { navigator.clipboard.writeText(document.getElementById('momContent').innerText).then(()=>alert('Copied!')); }
+function copyTranscript() { navigator.clipboard.writeText(transcriptText).then(()=>alert('Copied!')); }
+function downloadMoM() {
+  const name = (document.getElementById('clientName').value.trim()||'Client').replace(/\s+/g,'_');
+  const date = document.getElementById('meetingDate').value || 'meeting';
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([document.getElementById('momContent').innerText],{type:'text/plain'}));
+  a.download = 'MoM_'+name+'_'+date+'.txt'; a.click();
+}
+</script>
+</body>
+</html>
