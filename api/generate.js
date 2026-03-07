@@ -14,7 +14,7 @@ export default async function handler(req, res) {
 
     // Step 1: Transcribe
     const transcriptRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -60,7 +60,7 @@ Generate clean inner HTML (no doctype/html/body tags) with these sections:
 Available CSS classes: h1, h2, h3, .meta-grid, .meta-label, .section-card, .divider, .action-table, ul, li. Be detailed and professional. Output only valid inner HTML — no markdown, no backticks.`;
 
     const momRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
