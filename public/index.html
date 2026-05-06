@@ -20,41 +20,21 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--ink);
-    min-height: 100vh;
-  }
-
-  header {
-    background: var(--ink);
-    color: var(--cream);
-    padding: 16px 24px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border-bottom: 2px solid var(--gold);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
+  header { background: var(--ink); color: var(--cream); padding: 16px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 100; }
   .logo { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; letter-spacing: 0.08em; color: var(--gold); }
   .logo span { color: var(--cream); font-weight: 300; }
   header p { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
 
   .container { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
-
   h1 { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 300; color: var(--ink); margin-bottom: 4px; }
   .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
 
-  /* MODE TOGGLE */
   .mode-toggle { display: flex; background: white; border: 1.5px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 24px; width: 100%; }
   .mode-btn { flex: 1; padding: 12px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; border: none; background: none; color: var(--muted); cursor: pointer; transition: all 0.2s; }
   .mode-btn.active { background: var(--ink); color: var(--cream); }
 
-  /* RECORD PANEL */
   .record-section { display: none; flex-direction: column; align-items: center; padding: 40px 20px; background: white; border: 1.5px solid var(--border); border-radius: 4px; margin-bottom: 20px; text-align: center; gap: 16px; }
   .record-section.visible { display: flex; }
 
@@ -95,7 +75,6 @@
   .recorded-preview.visible { display: flex; }
   .recorded-preview audio { flex: 1; height: 32px; }
 
-  /* UPLOAD */
   .upload-zone { border: 1.5px dashed var(--gold); border-radius: 4px; background: #FFFDF8; padding: 40px 24px; text-align: center; cursor: pointer; transition: all 0.2s; position: relative; margin-bottom: 20px; display: none; }
   .upload-zone.visible { display: block; }
   .upload-zone:hover, .upload-zone.drag-over { background: var(--gold-light); border-color: var(--ink); border-style: solid; }
@@ -106,7 +85,6 @@
   .file-loaded { background: #F0F7F2 !important; border: 1.5px solid var(--success) !important; }
   .file-loaded h3 { color: var(--success); }
 
-  /* FIELDS */
   .fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
   @media (max-width:580px) { .fields-grid { grid-template-columns: 1fr; } }
   .field { display: flex; flex-direction: column; gap: 5px; }
@@ -116,7 +94,6 @@
   input:focus, textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.12); }
   textarea { resize: vertical; min-height: 72px; }
 
-  /* BUTTONS */
   .btn { background: var(--ink); color: var(--cream); border: none; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; border-radius: 3px; transition: all 0.2s; display: inline-flex; align-items: center; gap: 10px; width: 100%; justify-content: center; }
   .btn:hover:not(:disabled) { background: var(--gold); color: var(--ink); }
   .btn:disabled { opacity: 0.45; cursor: not-allowed; }
@@ -124,12 +101,10 @@
   .btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
   .btn-outline:hover:not(:disabled) { background: var(--ink); color: var(--cream); }
 
-  /* PROGRESS */
   .progress-bar { height: 3px; background: var(--border); border-radius: 2px; margin: 20px 0; overflow: hidden; }
   .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--ink)); border-radius: 2px; transition: width 0.6s ease; width: 0%; }
   .status-msg { font-size: 13px; color: var(--muted); margin-bottom: 6px; min-height: 18px; }
 
-  /* RESULT */
   .result-section { display: none; margin-top: 36px; }
   .result-section.visible { display: block; }
   .tabs { display: flex; border-bottom: 1.5px solid var(--border); margin-bottom: 20px; }
@@ -138,7 +113,6 @@
   .tab-content { display: none; }
   .tab-content.active { display: block; }
 
-  /* MOM DOC */
   .mom-doc { background: white; border: 1px solid var(--border); border-radius: 4px; padding: 32px 24px; line-height: 1.7; font-size: 14px; }
   .mom-doc h1 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; }
   .mom-doc h2 { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 600; margin: 24px 0 8px; padding-left: 10px; border-left: 3px solid var(--gold); }
@@ -156,8 +130,7 @@
   @keyframes spin { to { transform: rotate(360deg); } }
   .divider { height: 1px; background: var(--border); margin: 24px 0; }
   .section-card { background: #FAFAF8; border: 1px solid var(--border); border-radius: 3px; padding: 14px 16px; margin-bottom: 10px; }
-  ul { padding-left: 20px; }
-  li { margin-bottom: 4px; }
+  ul { padding-left: 20px; } li { margin-bottom: 4px; }
 </style>
 </head>
 <body>
@@ -173,13 +146,11 @@
   <h1>Meeting Transcription & MoM</h1>
   <p class="subtitle">Record live or upload a file — get a professional Minutes of Meeting instantly.</p>
 
-  <!-- MODE TOGGLE -->
   <div class="mode-toggle">
     <button class="mode-btn active" id="modeRecordBtn" onclick="setMode('record')">🎙 Record Live</button>
     <button class="mode-btn" id="modeUploadBtn" onclick="setMode('upload')">⬆ Upload File</button>
   </div>
 
-  <!-- LIVE RECORD PANEL -->
   <div class="record-section visible" id="recordSection">
     <div class="rec-wrap">
       <div class="pulse-ring" id="pulse1"></div>
@@ -195,22 +166,20 @@
       <div class="wave-bar"></div>
     </div>
     <div class="rec-label" id="recLabel">Tap to start recording</div>
-    <p class="rec-hint" id="recHint">Microphone access required — audio stays on your device</p>
+    <p class="rec-hint" id="recHint">Microphone access required — no limit on recording length</p>
     <div class="recorded-preview" id="recordedPreview">
       <span>✓</span>
       <audio id="recordedAudio" controls></audio>
     </div>
   </div>
 
-  <!-- UPLOAD PANEL -->
   <div class="upload-zone" id="uploadZone">
     <input type="file" id="audioFile" accept="audio/*,video/*" />
     <div class="upload-icon">🎙️</div>
     <h3 id="uploadTitle">Drop your recording here</h3>
-    <p id="uploadSub">MP3, M4A, WAV, OGG — or tap to browse</p>
+    <p id="uploadSub">MP3, M4A, WAV, OGG — any length supported</p>
   </div>
 
-  <!-- CONTEXT FIELDS -->
   <div class="fields-grid">
     <div class="field">
       <label>Client Name</label>
@@ -246,7 +215,6 @@
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
   </div>
 
-  <!-- RESULT -->
   <div class="result-section" id="resultSection">
     <div class="tabs">
       <button class="tab active" onclick="switchTab('mom')">📄 Minutes of Meeting</button>
@@ -269,10 +237,10 @@
 </div>
 
 <script>
-let audioBase64 = '';
+// ── STATE ──
+let recordedBlob = null;
+let uploadedFile = null;
 let audioMimeType = 'audio/webm';
-let transcriptText = '';
-let momText = '';
 
 let mediaRecorder = null;
 let audioChunks = [];
@@ -282,6 +250,7 @@ let isRecording = false;
 
 document.getElementById('meetingDate').value = new Date().toISOString().split('T')[0];
 
+// ── MODE ──
 function setMode(mode) {
   document.getElementById('modeRecordBtn').classList.toggle('active', mode === 'record');
   document.getElementById('modeUploadBtn').classList.toggle('active', mode === 'upload');
@@ -289,6 +258,7 @@ function setMode(mode) {
   document.getElementById('uploadZone').classList.toggle('visible', mode === 'upload');
 }
 
+// ── RECORDING ──
 async function toggleRecording() {
   if (!isRecording) { await startRecording(); } else { stopRecording(); }
 }
@@ -303,25 +273,21 @@ async function startRecording() {
     mediaRecorder = new MediaRecorder(stream, { mimeType });
     mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
     mediaRecorder.onstop = () => {
-      const blob = new Blob(audioChunks, { type: audioMimeType });
-      document.getElementById('recordedAudio').src = URL.createObjectURL(blob);
+      recordedBlob = new Blob(audioChunks, { type: audioMimeType });
+      document.getElementById('recordedAudio').src = URL.createObjectURL(recordedBlob);
       document.getElementById('recordedPreview').classList.add('visible');
-      const reader = new FileReader();
-      reader.onload = ev => {
-        audioBase64 = ev.target.result.split(',')[1];
-        document.getElementById('generateBtn').disabled = false;
-      };
-      reader.readAsDataURL(blob);
+      document.getElementById('generateBtn').disabled = false;
       stream.getTracks().forEach(t => t.stop());
     };
     mediaRecorder.start(250);
     isRecording = true;
     recordingSeconds = 0;
+    recordedBlob = null;
     document.getElementById('recBtn').classList.add('recording');
     document.getElementById('recBtn').textContent = '⏹';
     document.getElementById('recLabel').textContent = 'Recording… tap to stop';
     document.getElementById('recLabel').classList.add('recording');
-    document.getElementById('recHint').textContent = 'Tap the button when done';
+    document.getElementById('recHint').textContent = 'Recording in progress — no time limit';
     document.getElementById('recTimer').classList.add('visible');
     document.getElementById('waveform').classList.add('visible');
     document.getElementById('recordedPreview').classList.remove('visible');
@@ -354,6 +320,7 @@ function updateTimer() {
     String(Math.floor(recordingSeconds/60)).padStart(2,'0') + ':' + String(recordingSeconds%60).padStart(2,'0');
 }
 
+// ── UPLOAD ──
 const zone = document.getElementById('uploadZone');
 zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
 zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
@@ -362,16 +329,45 @@ document.getElementById('audioFile').addEventListener('change', e => { if (e.tar
 
 function handleFile(file) {
   if (!file) return;
+  uploadedFile = file;
   audioMimeType = file.type || 'audio/mpeg';
   document.getElementById('uploadTitle').textContent = '✓ ' + file.name;
   document.getElementById('uploadSub').textContent = (file.size/1024/1024).toFixed(1) + ' MB — ready';
   zone.classList.add('file-loaded');
-  const reader = new FileReader();
-  reader.onload = ev => {
-    audioBase64 = ev.target.result.split(',')[1];
-    document.getElementById('generateBtn').disabled = false;
-  };
-  reader.readAsDataURL(file);
+  document.getElementById('generateBtn').disabled = false;
+}
+
+// ── SPLIT AUDIO INTO CHUNKS ──
+// Splits a Blob into ~5MB chunks (safe for Gemini API)
+async function splitAudioIntoChunks(blob) {
+  const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB per chunk
+  const chunks = [];
+
+  if (blob.size <= CHUNK_SIZE) {
+    // Small enough — send as single chunk
+    const base64 = await blobToBase64(blob);
+    chunks.push(base64);
+  } else {
+    // Split into pieces
+    let offset = 0;
+    while (offset < blob.size) {
+      const slice = blob.slice(offset, offset + CHUNK_SIZE);
+      const base64 = await blobToBase64(slice);
+      chunks.push(base64);
+      offset += CHUNK_SIZE;
+    }
+  }
+
+  return chunks;
+}
+
+function blobToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = ev => resolve(ev.target.result.split(',')[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
 }
 
 function setProgress(pct, msg) {
@@ -379,8 +375,10 @@ function setProgress(pct, msg) {
   document.getElementById('statusMsg').textContent = msg;
 }
 
+// ── GENERATE ──
 document.getElementById('generateBtn').addEventListener('click', async () => {
-  if (!audioBase64) return;
+  const sourceBlob = recordedBlob || uploadedFile;
+  if (!sourceBlob) return;
 
   const clientName = document.getElementById('clientName').value.trim() || 'Client';
   const meetingDate = (() => { try { return new Date(document.getElementById('meetingDate').value).toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' }); } catch(e) { return document.getElementById('meetingDate').value; } })();
@@ -395,18 +393,34 @@ document.getElementById('generateBtn').addEventListener('click', async () => {
   document.getElementById('resultSection').classList.remove('visible');
 
   try {
-    setProgress(15, 'Transcribing audio with Gemini…');
+    setProgress(5, 'Preparing audio…');
+
+    // Split audio into chunks
+    const chunks = await splitAudioIntoChunks(sourceBlob);
+    const totalChunks = chunks.length;
+
+    setProgress(10, totalChunks > 1
+      ? `Long recording detected — splitting into ${totalChunks} parts for processing…`
+      : 'Sending audio to Gemini…');
 
     // Animate progress while waiting
-    let fakeProgress = 15;
+    let fakeProgress = 10;
+    const maxFake = totalChunks > 1 ? 75 : 80;
     const progressInterval = setInterval(() => {
-      if (fakeProgress < 80) { fakeProgress += 2; setProgress(fakeProgress, fakeProgress < 50 ? 'Transcribing audio…' : 'Generating Minutes of Meeting…'); }
-    }, 800);
+      if (fakeProgress < maxFake) {
+        fakeProgress += 1;
+        const part = Math.ceil((fakeProgress - 10) / ((maxFake - 10) / totalChunks));
+        const msg = totalChunks > 1
+          ? `Transcribing part ${Math.min(part, totalChunks)} of ${totalChunks}…`
+          : 'Transcribing audio…';
+        setProgress(fakeProgress, msg);
+      }
+    }, 600);
 
     const res = await fetch('/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ audioBase64, audioMimeType, clientName, meetingDate, location, preparedBy, extraCtx })
+      body: JSON.stringify({ chunks, audioMimeType, clientName, meetingDate, location, preparedBy, extraCtx })
     });
 
     clearInterval(progressInterval);
@@ -414,12 +428,14 @@ document.getElementById('generateBtn').addEventListener('click', async () => {
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Generation failed');
 
-    transcriptText = data.transcript;
-    momText = data.mom;
+    setProgress(90, 'Generating Minutes of Meeting…');
+
+    // Small delay so user sees the MoM step
+    await new Promise(r => setTimeout(r, 500));
 
     setProgress(100, '✓ Done!');
-    document.getElementById('momContent').innerHTML = momText;
-    document.getElementById('transcriptContent').textContent = transcriptText;
+    document.getElementById('momContent').innerHTML = data.mom;
+    document.getElementById('transcriptContent').textContent = data.transcript;
     document.getElementById('resultSection').classList.add('visible');
     setTimeout(() => document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' }), 200);
 
@@ -440,7 +456,7 @@ function switchTab(tab) {
 }
 
 function copyMoM() { navigator.clipboard.writeText(document.getElementById('momContent').innerText).then(()=>alert('Copied!')); }
-function copyTranscript() { navigator.clipboard.writeText(transcriptText).then(()=>alert('Copied!')); }
+function copyTranscript() { navigator.clipboard.writeText(document.getElementById('transcriptContent').textContent).then(()=>alert('Copied!')); }
 function downloadMoM() {
   const name = (document.getElementById('clientName').value.trim()||'Client').replace(/\s+/g,'_');
   const date = document.getElementById('meetingDate').value || 'meeting';
