@@ -10,7 +10,7 @@ Powered by **Google Gemini** — completely free.
 1. Go to **aistudio.google.com**
 2. Sign in with your Google account
 3. Click **"Get API Key"** → **"Create API Key"**
-4. Copy the key — you'll need it in Step 3 below
+4. Copy the key — you'll need it in Step 3 below.
 
 ---
 
