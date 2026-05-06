@@ -7,18 +7,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --cream: #F7F4EF;
-    --ink: #1A1714;
-    --gold: #C9A84C;
-    --gold-light: #E8D5A3;
-    --muted: #7A7169;
-    --border: #DDD8CF;
-    --success: #4A7C59;
-    --error: #8B2635;
-    --rec: #C0392B;
-    --rec-glow: rgba(192,57,43,0.25);
+    --cream: #F7F4EF; --ink: #1A1714; --gold: #C9A84C; --gold-light: #E8D5A3;
+    --muted: #7A7169; --border: #DDD8CF; --success: #4A7C59;
+    --error: #8B2635; --rec: #C0392B; --rec-glow: rgba(192,57,43,0.25);
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; }
 
@@ -28,7 +20,7 @@
   header p { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
 
   .container { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
-  h1 { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 300; color: var(--ink); margin-bottom: 4px; }
+  h1 { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 300; margin-bottom: 4px; }
   .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
 
   .mode-toggle { display: flex; background: white; border: 1.5px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 24px; width: 100%; }
@@ -37,39 +29,29 @@
 
   .record-section { display: none; flex-direction: column; align-items: center; padding: 40px 20px; background: white; border: 1.5px solid var(--border); border-radius: 4px; margin-bottom: 20px; text-align: center; gap: 16px; }
   .record-section.visible { display: flex; }
-
   .rec-wrap { position: relative; display: flex; align-items: center; justify-content: center; width: 120px; height: 120px; }
   .pulse-ring { position: absolute; width: 100px; height: 100px; border-radius: 50%; border: 2px solid var(--rec); opacity: 0; pointer-events: none; }
   .pulse-ring.animate { animation: pulse-out 1.4s ease-out infinite; }
   .pulse-ring:nth-child(2).animate { animation-delay: 0.45s; }
   .pulse-ring:nth-child(3).animate { animation-delay: 0.9s; }
   @keyframes pulse-out { 0% { transform: scale(0.9); opacity: 0.65; } 100% { transform: scale(2); opacity: 0; } }
-
   .rec-btn { position: relative; z-index: 2; width: 80px; height: 80px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 28px; transition: all 0.25s; background: var(--ink); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
   .rec-btn:hover { transform: scale(1.07); }
-  .rec-btn.recording { background: var(--rec); box-shadow: 0 4px 24px var(--rec-glow); animation: rec-breathe 2s ease-in-out infinite; }
+  .rec-btn.recording { background: var(--rec); animation: rec-breathe 2s ease-in-out infinite; }
   @keyframes rec-breathe { 0%,100% { box-shadow: 0 4px 24px var(--rec-glow); } 50% { box-shadow: 0 6px 44px rgba(192,57,43,0.55); } }
-
-  .rec-label { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 400; color: var(--ink); }
+  .rec-label { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 400; }
   .rec-label.recording { color: var(--rec); }
-  .rec-timer { font-size: 30px; font-weight: 300; letter-spacing: 0.12em; color: var(--ink); font-variant-numeric: tabular-nums; display: none; }
+  .rec-timer { font-size: 30px; font-weight: 300; letter-spacing: 0.12em; font-variant-numeric: tabular-nums; display: none; }
   .rec-timer.visible { display: block; }
-
   .waveform { display: none; align-items: center; gap: 3px; height: 32px; }
   .waveform.visible { display: flex; }
   .wave-bar { width: 4px; background: var(--rec); border-radius: 2px; animation: wave 0.8s ease-in-out infinite alternate; }
-  .wave-bar:nth-child(1)  { animation-delay:0.00s; height:12px; }
-  .wave-bar:nth-child(2)  { animation-delay:0.10s; height:22px; }
-  .wave-bar:nth-child(3)  { animation-delay:0.20s; height:30px; }
-  .wave-bar:nth-child(4)  { animation-delay:0.05s; height:16px; }
-  .wave-bar:nth-child(5)  { animation-delay:0.15s; height:30px; }
-  .wave-bar:nth-child(6)  { animation-delay:0.25s; height:20px; }
-  .wave-bar:nth-child(7)  { animation-delay:0.00s; height:14px; }
-  .wave-bar:nth-child(8)  { animation-delay:0.10s; height:24px; }
-  .wave-bar:nth-child(9)  { animation-delay:0.20s; height:18px; }
-  .wave-bar:nth-child(10) { animation-delay:0.05s; height:10px; }
-  @keyframes wave { from { transform:scaleY(0.3); } to { transform:scaleY(1); } }
-
+  .wave-bar:nth-child(1){animation-delay:0.00s;height:12px} .wave-bar:nth-child(2){animation-delay:0.10s;height:22px}
+  .wave-bar:nth-child(3){animation-delay:0.20s;height:30px} .wave-bar:nth-child(4){animation-delay:0.05s;height:16px}
+  .wave-bar:nth-child(5){animation-delay:0.15s;height:30px} .wave-bar:nth-child(6){animation-delay:0.25s;height:20px}
+  .wave-bar:nth-child(7){animation-delay:0.00s;height:14px} .wave-bar:nth-child(8){animation-delay:0.10s;height:24px}
+  .wave-bar:nth-child(9){animation-delay:0.20s;height:18px} .wave-bar:nth-child(10){animation-delay:0.05s;height:10px}
+  @keyframes wave { from{transform:scaleY(0.3)} to{transform:scaleY(1)} }
   .rec-hint { font-size: 12px; color: var(--muted); }
   .recorded-preview { display: none; align-items: center; gap: 10px; background: #F0F7F2; border: 1px solid var(--success); border-radius: 3px; padding: 10px 14px; font-size: 13px; color: var(--success); width: 100%; }
   .recorded-preview.visible { display: flex; }
@@ -77,7 +59,7 @@
 
   .upload-zone { border: 1.5px dashed var(--gold); border-radius: 4px; background: #FFFDF8; padding: 40px 24px; text-align: center; cursor: pointer; transition: all 0.2s; position: relative; margin-bottom: 20px; display: none; }
   .upload-zone.visible { display: block; }
-  .upload-zone:hover, .upload-zone.drag-over { background: var(--gold-light); border-color: var(--ink); border-style: solid; }
+  .upload-zone:hover, .upload-zone.drag-over { background: var(--gold-light); border-color: var(--ink); }
   .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
   .upload-icon { font-size: 32px; margin-bottom: 10px; opacity: 0.6; }
   .upload-zone h3 { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 400; margin-bottom: 4px; }
@@ -86,11 +68,11 @@
   .file-loaded h3 { color: var(--success); }
 
   .fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-  @media (max-width:580px) { .fields-grid { grid-template-columns: 1fr; } }
+  @media(max-width:580px){ .fields-grid { grid-template-columns: 1fr; } }
   .field { display: flex; flex-direction: column; gap: 5px; }
   .field.full { grid-column: 1 / -1; }
   label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 500; }
-  input, textarea { border: 1px solid var(--border); border-radius: 3px; padding: 10px 13px; font-family: 'DM Sans', sans-serif; font-size: 14px; background: white; color: var(--ink); transition: border-color 0.2s; outline: none; width: 100%; }
+  input, textarea { border: 1px solid var(--border); border-radius: 3px; padding: 10px 13px; font-family: 'DM Sans', sans-serif; font-size: 14px; background: white; color: var(--ink); outline: none; width: 100%; transition: border-color 0.2s; }
   input:focus, textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.12); }
   textarea { resize: vertical; min-height: 72px; }
 
@@ -101,9 +83,10 @@
   .btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
   .btn-outline:hover:not(:disabled) { background: var(--ink); color: var(--cream); }
 
-  .progress-bar { height: 3px; background: var(--border); border-radius: 2px; margin: 20px 0; overflow: hidden; }
-  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--ink)); border-radius: 2px; transition: width 0.6s ease; width: 0%; }
-  .status-msg { font-size: 13px; color: var(--muted); margin-bottom: 6px; min-height: 18px; }
+  .progress-wrap { display: none; margin-top: 16px; }
+  .status-msg { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+  .progress-bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--ink)); border-radius: 2px; transition: width 0.4s ease; width: 0%; }
 
   .result-section { display: none; margin-top: 36px; }
   .result-section.visible { display: block; }
@@ -144,7 +127,7 @@
 
 <div class="container">
   <h1>Meeting Transcription & MoM</h1>
-  <p class="subtitle">Record live or upload a file — get a professional Minutes of Meeting instantly.</p>
+  <p class="subtitle">Record live or upload a file — any length supported.</p>
 
   <div class="mode-toggle">
     <button class="mode-btn active" id="modeRecordBtn" onclick="setMode('record')">🎙 Record Live</button>
@@ -166,7 +149,7 @@
       <div class="wave-bar"></div>
     </div>
     <div class="rec-label" id="recLabel">Tap to start recording</div>
-    <p class="rec-hint" id="recHint">Microphone access required — no limit on recording length</p>
+    <p class="rec-hint" id="recHint">No time limit — record the entire meeting</p>
     <div class="recorded-preview" id="recordedPreview">
       <span>✓</span>
       <audio id="recordedAudio" controls></audio>
@@ -181,36 +164,18 @@
   </div>
 
   <div class="fields-grid">
-    <div class="field">
-      <label>Client Name</label>
-      <input type="text" id="clientName" placeholder="e.g. Mr. & Mrs. Sharma" />
-    </div>
-    <div class="field">
-      <label>Meeting Date</label>
-      <input type="date" id="meetingDate" />
-    </div>
-    <div class="field">
-      <label>Location / Medium</label>
-      <input type="text" id="location" placeholder="e.g. Site visit – Whitefield" />
-    </div>
-    <div class="field">
-      <label>Prepared By</label>
-      <input type="text" id="preparedBy" value="Kaffil – Sales Manager" />
-    </div>
-    <div class="field full">
-      <label>Additional Context (optional)</label>
-      <textarea id="context" placeholder="Project type, apartment size, design theme, budget…"></textarea>
-    </div>
+    <div class="field"><label>Client Name</label><input type="text" id="clientName" placeholder="e.g. Mr. & Mrs. Sharma" /></div>
+    <div class="field"><label>Meeting Date</label><input type="date" id="meetingDate" /></div>
+    <div class="field"><label>Location / Medium</label><input type="text" id="location" placeholder="e.g. Site visit – Whitefield" /></div>
+    <div class="field"><label>Prepared By</label><input type="text" id="preparedBy" value="Kaffil – Sales Manager" /></div>
+    <div class="field full"><label>Additional Context (optional)</label><textarea id="context" placeholder="Project type, apartment size, design theme, budget…"></textarea></div>
   </div>
 
-  <button class="btn" id="generateBtn" disabled>
-    <span>✦</span>
-    <span id="btnText">Generate MoM</span>
-  </button>
+  <button class="btn" id="generateBtn" disabled><span>✦</span><span>Generate MoM</span></button>
 
   <div id="errorBox" class="error-box" style="display:none;"></div>
 
-  <div id="progressSection" style="display:none; margin-top:16px;">
+  <div class="progress-wrap" id="progressWrap">
     <p class="status-msg" id="statusMsg">Processing…</p>
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
   </div>
@@ -229,19 +194,15 @@
     </div>
     <div class="tab-content" id="transcriptTab">
       <div class="transcript-box" id="transcriptContent"></div>
-      <div class="actions-bar">
-        <button class="btn btn-sm btn-outline" onclick="copyTranscript()">Copy Transcript</button>
-      </div>
+      <div class="actions-bar"><button class="btn btn-sm btn-outline" onclick="copyTranscript()">Copy Transcript</button></div>
     </div>
   </div>
 </div>
 
 <script>
-// ── STATE ──
 let recordedBlob = null;
 let uploadedFile = null;
 let audioMimeType = 'audio/webm';
-
 let mediaRecorder = null;
 let audioChunks = [];
 let recordingTimer = null;
@@ -250,7 +211,6 @@ let isRecording = false;
 
 document.getElementById('meetingDate').value = new Date().toISOString().split('T')[0];
 
-// ── MODE ──
 function setMode(mode) {
   document.getElementById('modeRecordBtn').classList.toggle('active', mode === 'record');
   document.getElementById('modeUploadBtn').classList.toggle('active', mode === 'upload');
@@ -258,7 +218,6 @@ function setMode(mode) {
   document.getElementById('uploadZone').classList.toggle('visible', mode === 'upload');
 }
 
-// ── RECORDING ──
 async function toggleRecording() {
   if (!isRecording) { await startRecording(); } else { stopRecording(); }
 }
@@ -295,16 +254,12 @@ async function startRecording() {
     ['pulse1','pulse2','pulse3'].forEach(id => document.getElementById(id).classList.add('animate'));
     updateTimer();
     recordingTimer = setInterval(updateTimer, 1000);
-  } catch(e) {
-    alert('Microphone access denied. Please allow microphone access and try again.');
-  }
+  } catch(e) { alert('Microphone access denied. Please allow microphone access and try again.'); }
 }
 
 function stopRecording() {
   if (!mediaRecorder || !isRecording) return;
-  mediaRecorder.stop();
-  isRecording = false;
-  clearInterval(recordingTimer);
+  mediaRecorder.stop(); isRecording = false; clearInterval(recordingTimer);
   document.getElementById('recBtn').classList.remove('recording');
   document.getElementById('recBtn').textContent = '🎙';
   document.getElementById('recLabel').textContent = '✓ Recording saved';
@@ -317,10 +272,9 @@ function stopRecording() {
 function updateTimer() {
   recordingSeconds++;
   document.getElementById('recTimer').textContent =
-    String(Math.floor(recordingSeconds/60)).padStart(2,'0') + ':' + String(recordingSeconds%60).padStart(2,'0');
+    String(Math.floor(recordingSeconds/60)).padStart(2,'0')+':'+String(recordingSeconds%60).padStart(2,'0');
 }
 
-// ── UPLOAD ──
 const zone = document.getElementById('uploadZone');
 zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
 zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
@@ -329,36 +283,23 @@ document.getElementById('audioFile').addEventListener('change', e => { if (e.tar
 
 function handleFile(file) {
   if (!file) return;
-  uploadedFile = file;
-  audioMimeType = file.type || 'audio/mpeg';
+  uploadedFile = file; audioMimeType = file.type || 'audio/mpeg';
   document.getElementById('uploadTitle').textContent = '✓ ' + file.name;
   document.getElementById('uploadSub').textContent = (file.size/1024/1024).toFixed(1) + ' MB — ready';
   zone.classList.add('file-loaded');
   document.getElementById('generateBtn').disabled = false;
 }
 
-// ── SPLIT AUDIO INTO CHUNKS ──
-// Splits a Blob into ~5MB chunks (safe for Gemini API)
-async function splitAudioIntoChunks(blob) {
-  const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB per chunk
-  const chunks = [];
-
-  if (blob.size <= CHUNK_SIZE) {
-    // Small enough — send as single chunk
-    const base64 = await blobToBase64(blob);
-    chunks.push(base64);
-  } else {
-    // Split into pieces
-    let offset = 0;
-    while (offset < blob.size) {
-      const slice = blob.slice(offset, offset + CHUNK_SIZE);
-      const base64 = await blobToBase64(slice);
-      chunks.push(base64);
-      offset += CHUNK_SIZE;
-    }
+// Split blob into 3MB chunks (safe under Vercel's 4.5MB limit)
+async function splitBlob(blob) {
+  const CHUNK_SIZE = 3 * 1024 * 1024; // 3MB
+  const parts = [];
+  let offset = 0;
+  while (offset < blob.size) {
+    parts.push(blob.slice(offset, offset + CHUNK_SIZE));
+    offset += CHUNK_SIZE;
   }
-
-  return chunks;
+  return parts;
 }
 
 function blobToBase64(blob) {
@@ -375,13 +316,12 @@ function setProgress(pct, msg) {
   document.getElementById('statusMsg').textContent = msg;
 }
 
-// ── GENERATE ──
 document.getElementById('generateBtn').addEventListener('click', async () => {
   const sourceBlob = recordedBlob || uploadedFile;
   if (!sourceBlob) return;
 
   const clientName = document.getElementById('clientName').value.trim() || 'Client';
-  const meetingDate = (() => { try { return new Date(document.getElementById('meetingDate').value).toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' }); } catch(e) { return document.getElementById('meetingDate').value; } })();
+  const meetingDate = (() => { try { return new Date(document.getElementById('meetingDate').value).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'}); } catch(e) { return document.getElementById('meetingDate').value; }})();
   const location   = document.getElementById('location').value.trim() || 'Not specified';
   const preparedBy = document.getElementById('preparedBy').value.trim() || 'Kaffil – Sales Manager';
   const extraCtx   = document.getElementById('context').value.trim();
@@ -389,60 +329,67 @@ document.getElementById('generateBtn').addEventListener('click', async () => {
   document.getElementById('generateBtn').disabled = true;
   document.getElementById('generateBtn').innerHTML = '<span class="spinner"></span><span>Processing…</span>';
   document.getElementById('errorBox').style.display = 'none';
-  document.getElementById('progressSection').style.display = 'block';
+  document.getElementById('progressWrap').style.display = 'block';
   document.getElementById('resultSection').classList.remove('visible');
 
   try {
     setProgress(5, 'Preparing audio…');
 
-    // Split audio into chunks
-    const chunks = await splitAudioIntoChunks(sourceBlob);
-    const totalChunks = chunks.length;
+    // Split into 3MB chunks
+    const blobParts = await splitBlob(sourceBlob);
+    const totalChunks = blobParts.length;
 
-    setProgress(10, totalChunks > 1
-      ? `Long recording detected — splitting into ${totalChunks} parts for processing…`
-      : 'Sending audio to Gemini…');
+    let fullTranscript = '';
 
-    // Animate progress while waiting
-    let fakeProgress = 10;
-    const maxFake = totalChunks > 1 ? 75 : 80;
-    const progressInterval = setInterval(() => {
-      if (fakeProgress < maxFake) {
-        fakeProgress += 1;
-        const part = Math.ceil((fakeProgress - 10) / ((maxFake - 10) / totalChunks));
-        const msg = totalChunks > 1
-          ? `Transcribing part ${Math.min(part, totalChunks)} of ${totalChunks}…`
-          : 'Transcribing audio…';
-        setProgress(fakeProgress, msg);
-      }
-    }, 600);
+    // Transcribe each chunk as a separate request
+    for (let i = 0; i < totalChunks; i++) {
+      const pct = 10 + Math.round((i / totalChunks) * 70);
+      setProgress(pct, totalChunks > 1
+        ? `Transcribing part ${i + 1} of ${totalChunks}…`
+        : 'Transcribing audio…');
 
-    const res = await fetch('/api/generate', {
+      const base64 = await blobToBase64(blobParts[i]);
+
+      const res = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          mode: 'transcribe',
+          audioBase64: base64,
+          audioMimeType,
+          chunkIndex: i,
+          totalChunks
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || `Part ${i+1} failed`);
+
+      fullTranscript += (totalChunks > 1 ? `\n\n--- Part ${i+1} of ${totalChunks} ---\n` : '') + data.transcript;
+    }
+
+    setProgress(85, 'Generating Minutes of Meeting…');
+
+    // Generate MoM from combined transcript
+    const momRes = await fetch('/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chunks, audioMimeType, clientName, meetingDate, location, preparedBy, extraCtx })
+      body: JSON.stringify({ mode: 'mom', transcript: fullTranscript, clientName, meetingDate, location, preparedBy, extraCtx })
     });
 
-    clearInterval(progressInterval);
-
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Generation failed');
-
-    setProgress(90, 'Generating Minutes of Meeting…');
-
-    // Small delay so user sees the MoM step
-    await new Promise(r => setTimeout(r, 500));
+    const momData = await momRes.json();
+    if (!momRes.ok) throw new Error(momData.error || 'MoM generation failed');
 
     setProgress(100, '✓ Done!');
-    document.getElementById('momContent').innerHTML = data.mom;
-    document.getElementById('transcriptContent').textContent = data.transcript;
+    document.getElementById('momContent').innerHTML = momData.mom;
+    document.getElementById('transcriptContent').textContent = fullTranscript;
     document.getElementById('resultSection').classList.add('visible');
     setTimeout(() => document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' }), 200);
 
   } catch(err) {
     document.getElementById('errorBox').textContent = 'Error: ' + err.message;
     document.getElementById('errorBox').style.display = 'block';
-    document.getElementById('progressSection').style.display = 'none';
+    document.getElementById('progressWrap').style.display = 'none';
   } finally {
     document.getElementById('generateBtn').disabled = false;
     document.getElementById('generateBtn').innerHTML = '<span>✦</span><span>Generate MoM</span>';
@@ -459,7 +406,7 @@ function copyMoM() { navigator.clipboard.writeText(document.getElementById('momC
 function copyTranscript() { navigator.clipboard.writeText(document.getElementById('transcriptContent').textContent).then(()=>alert('Copied!')); }
 function downloadMoM() {
   const name = (document.getElementById('clientName').value.trim()||'Client').replace(/\s+/g,'_');
-  const date = document.getElementById('meetingDate').value || 'meeting';
+  const date = document.getElementById('meetingDate').value||'meeting';
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([document.getElementById('momContent').innerText],{type:'text/plain'}));
   a.download = 'MoM_'+name+'_'+date+'.txt'; a.click();
